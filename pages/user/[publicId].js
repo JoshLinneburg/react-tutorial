@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import EditProfileForm from "../../components/EditUserForm";
 import UserProfile from "../../components/UserProfile";
 
-export default function UserPage({ userData }) {
+export default function UserPage() {
   const router = useRouter();
   const { publicId, editing } = router.query;
-  let [user, setUser] = useState(userData);
+  let [user, setUser] = useState({});
   let [status, setStatus] = useState("loading");
   let [isEditing, setIsEditing] = useState(editing === "true");
 
@@ -35,10 +35,7 @@ export default function UserPage({ userData }) {
       phone_nbr: values.phoneNumber,
     };
     try {
-      let response = await axios.patch(
-        `/api/v1/user/${user.public_id}`,
-        body
-      );
+      let response = await axios.patch(`/api/v1/user/${user.public_id}`, body);
       setUser(response.data.body);
     } catch (error) {
       console.error("Something went wrong!");
@@ -67,6 +64,7 @@ export default function UserPage({ userData }) {
   );
 }
 
+// Why do I need this if I want the UserPage to return data on page refreshes?
 export async function getServerSideProps(context) {
   return {
     props: {},
