@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import EditProfileForm from "../../components/EditProfileForm";
+import EditProfileForm from "../../components/EditUserForm";
 import UserProfile from "../../components/UserProfile";
 
 export default function UserPage({ userData }) {

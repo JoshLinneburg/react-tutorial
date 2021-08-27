@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import React from "react";
 
-export default function EditProfileForm({ user, onSubmit }) {
+export default function EditUserForm({ user, onSubmit }) {
   return (
     <Formik
       initialValues={{
