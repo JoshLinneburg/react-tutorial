@@ -36,7 +36,7 @@ export default function UserPage({ userData }) {
     };
     try {
       let response = await axios.patch(
-        `/api/v1/user/${userData.public_id}`,
+        `/api/v1/user/${user.public_id}`,
         body
       );
       setUser(response.data.body);
