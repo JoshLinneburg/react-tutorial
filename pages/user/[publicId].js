@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import EditProfileForm from "../../components/EditUserForm";
-import UserProfile from "../../components/UserProfile";
+import EditProfileForm from "components/EditUserForm";
+import UserProfile from "components/UserProfile";
 
 export default function UserPage() {
   const router = useRouter();
