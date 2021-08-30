@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
-import Table from "../components/UserTable";
+import Table from "components/UserTable";
 
 export default function Home() {
   let [users, setUsers] = useState([]);
