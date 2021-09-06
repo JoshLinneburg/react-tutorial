@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import Table from "components/UserTable";
 
 export default function Home() {
@@ -26,6 +27,19 @@ export default function Home() {
       {
         Header: "Links",
         accessor: "public_id",
+        Cell(cell) {
+          return (
+            <span>
+              <Link href={`/user/${cell.value}?editing=false`}>
+                <a>View</a>
+              </Link>
+              <span> or </span>
+              <Link href={`/user/${cell.value}?editing=true`}>
+                <a>Edit</a>
+              </Link>
+            </span>
+          );
+        },
       },
     ],
     []
