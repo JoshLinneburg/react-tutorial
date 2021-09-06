@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
 import Table from "components/UserTable";
+import { api } from "lib/api";
 
 export default function Home() {
   let [users, setUsers] = useState([]);
@@ -34,8 +34,8 @@ export default function Home() {
   useEffect(() => {
     async function getData() {
       try {
-        let response = await axios.get("/api/v1/user");
-        setUsers(response.data.body);
+        let users = await api.getUsers();
+        setUsers(users);
         setStatus("success");
       } catch (error) {
         setStatus("error");
@@ -45,7 +45,7 @@ export default function Home() {
     if (status === "loading") {
       getData();
     }
-  }, []);
+  }, [status]);
 
   return (
     <div>
