@@ -3,19 +3,20 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import EditProfileForm from "components/EditUserForm";
 import UserProfile from "components/UserProfile";
+import { api, createServerSideApiClient } from "lib/api";
 
-export default function UserPage() {
+export default function UserPage({ initialUser, initialStatus }) {
   const router = useRouter();
   const { publicId, editing } = router.query;
-  let [user, setUser] = useState({});
-  let [status, setStatus] = useState("loading");
+  let [user, setUser] = useState(initialUser);
+  let [status, setStatus] = useState(initialStatus);
   let [isEditing, setIsEditing] = useState(editing === "true");
 
   useEffect(() => {
     async function getData() {
       try {
-        let response = await axios.get(`/api/v1/user/${publicId}`);
-        setUser(response.data.body);
+        let user = await api.getUserById(publicId);
+        setUser(user);
         setStatus("success");
       } catch (error) {
         setStatus("error");
@@ -65,8 +66,23 @@ export default function UserPage() {
 }
 
 // Why do I need this if I want the UserPage to return data on page refreshes?
-export async function getServerSideProps(context) {
-  return {
-    props: {},
-  };
+export async function getServerSideProps({ query }) {
+  let apiClient = createServerSideApiClient();
+  try {
+    let user = await apiClient.getUserById(query.publicId);
+    return {
+      props: {
+        initialUser: user,
+        initialStatus: "success",
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        initialUser: null,
+        initialStatus: "error",
+      },
+    };
+  }
 }
