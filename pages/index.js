@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
 import Table from "components/UserTable";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  let session = useSession();
   let [users, setUsers] = useState([]);
   let [status, setStatus] = useState("loading");
   const columns = useMemo(
