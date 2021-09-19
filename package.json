@@ -11,9 +11,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "formik": "^2.2.9",
-    "jose": "^3.17.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.21",
     "next": "11.1.0",
     "next-auth": "^4.0.0-beta.2",
     "react": "17.0.2",
