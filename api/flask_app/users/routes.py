@@ -4,22 +4,27 @@ from flask import Blueprint, request, current_app, render_template, make_respons
 from flask_app import db
 from flask_app.models import User
 from flask_app.schemas import UserSchema
-from flask_app.users.forms import TestForm
-from sqlalchemy import or_
-from werkzeug.security import generate_password_hash
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request, decode_token
-import time
+from jwt.exceptions import DecodeError
+from sqlalchemy import or_
+from pprint import pprint
+from werkzeug.security import generate_password_hash
 
 users_bp = Blueprint("users_bp", __name__, url_prefix="/api/v1/user")
 
 
 @users_bp.route("", methods=["GET"])
-@jwt_required(optional=True)
+@jwt_required()
 def read_users():
-    token = request.headers.get('Authorization').split(' ')[-1]
-    # print(decode_token(token))
-    # print(verify_jwt_in_request(optional=True))
-    # print(get_jwt_identity())
+    headers = request.headers
+    access_token = headers.get("Authorization").split(" ")[-1]
+
+    try:
+        decoded_token = decode_token(encoded_token=access_token)
+        pprint(decoded_token)
+    except DecodeError:
+        return make_response({"message": "Could not decode access token"}, 422)
+
     users = User.query.all()
     user_schema = UserSchema(many=True)
     user_data = user_schema.dump(users)

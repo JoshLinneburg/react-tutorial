@@ -9,7 +9,7 @@ export default async function usersHandler(req, res) {
         secret: process.env.JWT_SECRET,
         raw: true,
       });
-      console.log(accessToken);
+      console.log(`Access token ${accessToken}`);
       let users = await flaskApi
         .getUsers({
           headers: { Authorization: `Bearer ${accessToken}` },
