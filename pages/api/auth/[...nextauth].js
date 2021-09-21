@@ -1,10 +1,6 @@
 import NextAuth from "next-auth";
 import FusionAuthProvider from "next-auth/providers/fusionauth";
-import axios from "axios";
-import uniq from "lodash/uniq";
 import jwt from "jsonwebtoken";
-
-// var jose = require("node-jose");
 
 export default NextAuth({
   providers: [
@@ -43,38 +39,15 @@ export default NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      let profile = await getUserProfile(token.sub);
-      let roles = getRolesFromUserProfile(profile);
-
       session.user.id = token.sub;
-      session.user.roles = roles;
+      session.user.roles = token.roles;
       return session;
     },
-    async jwt({ token, user, account }) {
-      // Persist the OAuth access_token to the token right after signin
-      // if (account) {
-      //   token.accessToken = account.access_token;
-      // }
+    async jwt({ token, profile }) {
+      if (profile) {
+        token.roles = profile.roles;
+      }
       return token;
     },
   },
 });
-
-function getUserProfile(userId) {
-  return axios({
-    baseURL: process.env.FUSIONAUTH_ISSUER,
-    url: `/api/user/${userId}`,
-    headers: { Authorization: process.env.FUSIONAUTH_API_KEY },
-  }).then((response) => response.data);
-}
-
-function getRolesFromUserProfile(profile) {
-  return uniq(
-    profile.user.registrations
-      .filter(
-        (registration) =>
-          registration.applicationId === process.env.FUSIONAUTH_CLIENT_ID
-      )
-      .flatMap((registration) => registration.roles)
-  );
-}
