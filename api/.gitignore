@@ -21,6 +21,7 @@ tut_app.py
 
 # Environment files
 *.env
+.flaskenv
 
 # Distribution / packaging
 .Python
