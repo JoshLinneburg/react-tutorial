@@ -63,7 +63,7 @@ FLASK_API_BASE_URL='http://localhost:5000'
 JWT_SECRET='FILL_IN'
 ```
 
-It is still unclear, but you may also need to update `api/.flaskenv` with a matching `SECRET_KEY` to what is used by Next Auth. We are still trying to figure that piece out though.
+The `JWT_SECRET` in `.env` and `SECRET_KEY` in `api/.flaskenv` should be identical and set to the output of `jose newkey -s 512 -t oct -a HS512`. 
 
 Then, run the development server for the React application:
 
