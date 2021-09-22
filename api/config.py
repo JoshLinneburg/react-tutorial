@@ -21,3 +21,4 @@ class Config(object):
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(minutes=60)
     JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=90)
     JWT_CSRF_METHODS = os.environ.get("JWT_CSRF_METHODS") or []
+    JWT_ALGORITHM = "HS512"

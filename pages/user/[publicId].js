@@ -65,7 +65,7 @@ export default function UserPage() {
 }
 
 // Why do I need this if I want the UserPage to return data on page refreshes?
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   return {
     props: {},
   };
