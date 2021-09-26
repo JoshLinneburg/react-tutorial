@@ -54,5 +54,3 @@ class UserSchema(ma.Schema):
             # "collection": {"href": ma.URLFor("users_bp.read_users", _external=True)},
         }
     )
-
-

@@ -6,9 +6,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 UserRole = db.Table(
-    'user_role',
-    Column('user_id', Integer, ForeignKey('user.id'), primary_key=True),
-    Column('role_id', Integer, ForeignKey('role.id'), primary_key=True)
+    "user_role",
+    Column("user_id", Integer, ForeignKey("user.id"), primary_key=True),
+    Column("role_id", Integer, ForeignKey("role.id"), primary_key=True),
 )
 
 
@@ -30,8 +30,9 @@ class User(db.Model):
     employment_status = Column(String(50))
     housing_status = Column(String(50))
     head_of_household_id = Column(Integer, ForeignKey("user.id", ondelete="CASCADE"))
-    household_members = relationship("User", backref=db.backref("head_of_household", remote_side=[id]), lazy="dynamic",
-                                     passive_deletes=True)
+    household_members = relationship(
+        "User", backref=db.backref("head_of_household", remote_side=[id]), lazy="dynamic", passive_deletes=True
+    )
 
     addr_1 = Column(String(128))
     addr_2 = Column(String(128))
@@ -97,4 +98,3 @@ class Role(db.Model):
 # class UserRole(db.Model):
 #     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False, primary_key=True)
 #     role_id = db.Column(db.Integer, db.ForeignKey("role.id"), nullable=True, primary_key=True)
-

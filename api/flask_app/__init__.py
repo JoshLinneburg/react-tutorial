@@ -23,6 +23,7 @@ def create_app(config_class=Config):
     jwt.init_app(app=app)
 
     from flask_app.users.routes import users_bp
+
     app.register_blueprint(users_bp)
 
     return app
